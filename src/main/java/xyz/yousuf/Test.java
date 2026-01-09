@@ -6,9 +6,13 @@ import java.util.List;
 public class Test {
       static void main() {
 
-            var input = "let x = 5 + 4;\nlet b = 6 + 7";
+            var input = """
+                      let x = 6;
+                      return 6;
+                      let b = 7;
+                      """;
             Parser parser = new Parser(input);
-            var allstatements = parser.parseTokens();
+            Program allstatements = parser.parseProgram();
             System.out.println(allstatements);
 
       }

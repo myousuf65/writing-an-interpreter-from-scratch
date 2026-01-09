@@ -18,12 +18,69 @@ public class Parser {
             moveToNextToken();
       }
 
-      public List<Statement> parseTokens() {
-            if (currentToken.Type() == TokenType.LET) {
-                  Statement statement = parseLetStatement();
-                  allStatements.add(statement);
+      public Program parseProgram() {
+            Program program = new Program();
+
+            while (currentToken.Type() != TokenType.EOF){
+                  Statement statement = null;
+                  switch (currentToken.Type()){
+                        case LET -> {
+                              statement = parseLetStatement();
+                        }
+                        case RETURN -> {
+                              // do something
+                              statement = parseReturnStatement();
+                        }
+                        case IF ->{
+                              // do something
+                        }
+                        case IDENT -> {
+                              // do something
+                        }
+                        case PLUS -> {
+                              // do something
+                        }
+                        case MINUS -> {
+                              // do something
+                        }
+                        case ASTERISK -> {
+
+                        }
+                        case SLASH -> {
+
+                        }
+                  }
+                  if (statement != null) {
+                        program.statements.add(statement);
+                  }
             }
-            return allStatements;
+            return program;
+      }
+
+      private Statement parseReturnStatement() {
+            ReturnStatement statement = new ReturnStatement();
+            statement.token = currentToken;
+
+
+            moveToNextToken();
+
+            Expression expression = null;
+            if (currentToken.Type() == TokenType.INT){
+                  expression = parseInteger();
+            }
+            if (currentToken.Type() == TokenType.IDENT){
+                  expression = parseIdentifier();
+            }
+
+            statement.returnValue = expression;
+
+            // skip semicolon
+            moveToNextToken();
+            if (currentToken.Type() == TokenType.SEMICOLON){
+                  moveToNextToken();
+            }
+
+            return statement;
       }
 
       public void moveToNextToken() {
@@ -32,10 +89,29 @@ public class Parser {
       }
 
       private Expression parseExpression() {
-            if (currentToken.Type() == TokenType.INT){
-                  return parseInteger();
-            }
-            return parseIdentifier();
+            return switch (currentToken.Type()) {
+                  case TokenType.INT -> {
+                        if (nextToken.Type() == TokenType.SEMICOLON) {
+                              yield parseInteger();
+                        } else {
+                              yield null;
+                        }
+                  }
+                  case TokenType.LPAREN -> {
+                        yield parseGroupExpression();
+                  }
+                  default -> {
+                        yield null;
+                  }
+            };
+      }
+
+      private Expression parseGroupExpression() {
+           return null;
+      }
+
+      private Expression parseOperatorExceprion() {
+            return null;
       }
 
       private Expression parseIdentifier() {
@@ -70,8 +146,12 @@ public class Parser {
             letStatement.value = parseExpression();
 
 
+            // ignore semicolon
+            moveToNextToken();
+            if (currentToken.Type() == TokenType.SEMICOLON){
+                  moveToNextToken();
+            }
 
             return letStatement;
       }
-
 }

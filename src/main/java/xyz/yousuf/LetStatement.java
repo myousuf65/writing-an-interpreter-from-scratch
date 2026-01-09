@@ -14,8 +14,4 @@ public class LetStatement implements Statement{
                   '}';
     }
 
-    @Override
-    public String tokenLiteral() {
-        return "";
-    }
 }
