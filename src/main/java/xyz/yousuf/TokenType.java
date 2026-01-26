@@ -14,6 +14,7 @@ public enum TokenType {
     BANG,
     ASTERISK,
     SLASH,
+    TILDE,
 
     COMMA,
     SEMICOLON,

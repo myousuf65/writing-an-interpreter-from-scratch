@@ -10,5 +10,8 @@ author: thorsten ball
 - my implementation relies on static class being able to presist var values across calls whilst throsten would pass around a pointer to a instance of a struct
 
 
-- **REPL is basically like a python or node shell**
-- **do check LISP REPL driven dev**
+> "REPL" is basically like a node shell or jshell
+
+
+### Pratt Parsing Visuals (referencing MyParser.java file)
+![pratt_parsing.png](images/pratt_parsing.png)

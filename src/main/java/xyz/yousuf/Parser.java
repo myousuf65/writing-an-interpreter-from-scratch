@@ -90,14 +90,14 @@ public class Parser {
 
       private Expression parseExpression() {
             return switch (currentToken.Type()) {
-                  case TokenType.INT -> {
+                  case INT -> {
                         if (nextToken.Type() == TokenType.SEMICOLON) {
                               yield parseInteger();
                         } else {
                               yield null;
                         }
                   }
-                  case TokenType.LPAREN -> {
+                  case LPAREN -> {
                         yield parseGroupExpression();
                   }
                   default -> {
